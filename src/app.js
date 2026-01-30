@@ -17,6 +17,11 @@ app.set("view engine", "ejs");
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 
+// HEALTH CHECK
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 // routes
 app.use(customerRoutes);
 
