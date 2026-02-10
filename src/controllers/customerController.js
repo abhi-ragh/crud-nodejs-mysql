@@ -8,12 +8,14 @@ export const renderCustomers = async (req, res) => {
 
 export const createCustomers = async (req, res) => {
   const newCustomer = req.body;
+  const pool = getPool();
   await pool.query("INSERT INTO customer set ?", [newCustomer]);
   res.redirect("/");
 };
 
 export const editCustomer = async (req, res) => {
   const { id } = req.params;
+  const pool = getPool();
   const [result] = await pool.query("SELECT * FROM customer WHERE id = ?", [
     id,
   ]);
@@ -22,6 +24,7 @@ export const editCustomer = async (req, res) => {
 
 export const updateCustomer = async (req, res) => {
   const { id } = req.params;
+  const pool = getPool();
   const newCustomer = req.body;
   await pool.query("UPDATE customer set ? WHERE id = ?", [newCustomer, id]);
   res.redirect("/");
@@ -29,6 +32,7 @@ export const updateCustomer = async (req, res) => {
 
 export const deleteCustomer = async (req, res) => {
   const { id } = req.params;
+  const pool = getPool();
   const result = await pool.query("DELETE FROM customer WHERE id = ?", [id]);
   if (result.affectedRows === 1) {
     res.json({ message: "Customer deleted" });
