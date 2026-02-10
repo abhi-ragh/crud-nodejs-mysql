@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import morgan from "morgan";
-import { loadSecrets } from "./secrets.js";
 
 import customerRoutes from "./routes/customer.routes.js";
 import { fileURLToPath } from "url";
@@ -18,7 +17,7 @@ app.set("view engine", "ejs");
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 
-// HEALTH CHECK
+// health check
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
 });
@@ -29,16 +28,4 @@ app.use(customerRoutes);
 // static files
 app.use(express.static(path.join(__dirname, "public")));
 
-// starting the server
-async function startServer() {
-  await loadSecrets();
-
-  app.listen(app.get("port"), () => {
-    console.log(`Server running on port ${app.get("port")}`);
-  });
-}
-
-startServer();
-
 export default app;
-

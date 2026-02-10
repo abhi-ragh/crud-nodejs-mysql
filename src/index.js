@@ -1,5 +1,13 @@
 import app from "./app.js";
-import { port } from "./config.js";
+import { loadSecrets } from "./secrets.js";
 
-app.listen(port);
-console.log(`server on port ${port}`);
+async function start() {
+  await loadSecrets();
+
+  const port = app.get("port");
+  app.listen(port, () => {
+    console.log(`server on port ${port}`);
+  });
+}
+
+start();
