@@ -1,6 +1,7 @@
-import { pool } from "../db.js";
+import { getPool } from "../db.js";
 
 export const renderCustomers = async (req, res) => {
+  const pool = getPool();
   const [rows] = await pool.query("SELECT * FROM customer");
   res.render("customers", { customers: rows });
 };
