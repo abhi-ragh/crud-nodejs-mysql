@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import morgan from "morgan";
+import { loadSecrets } from "./secrets.js";
 
 import customerRoutes from "./routes/customer.routes.js";
 import { fileURLToPath } from "url";
@@ -29,4 +30,15 @@ app.use(customerRoutes);
 app.use(express.static(path.join(__dirname, "public")));
 
 // starting the server
+async function startServer() {
+  await loadSecrets();
+
+  app.listen(app.get("port"), () => {
+    console.log(`Server running on port ${app.get("port")}`);
+  });
+}
+
+startServer();
+
 export default app;
+
