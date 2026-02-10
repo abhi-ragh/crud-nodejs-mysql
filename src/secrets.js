@@ -12,7 +12,7 @@ export async function loadSecrets() {
   const creds = JSON.parse(secret.SecretString);
 
   process.env.DB_HOST = creds.host;
-  process.env.DB_USER = creds.username;
+  process.env.DB_USER = creds.user;
   process.env.DB_PASSWORD = creds.password;
   process.env.DB_NAME = creds.database;
   process.env.DB_PORT = creds.port;
